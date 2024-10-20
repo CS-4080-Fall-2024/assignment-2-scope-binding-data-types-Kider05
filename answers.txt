@@ -1,0 +1,70 @@
+1.
+--> Statement Assignment
+--> Identifier = Expression
+--> A = Expression
+--> A = Term
+--> A = Term * Factor
+--> A = Identifier * Factor
+--> A = B * Factor
+--> A = B * (Expression)
+--> A = B * (Term)
+--> A = B * (Term * Factor)
+--> A = B * (Identifier * Factor)
+--> A = B * (C * Factor)
+--> A = B * (C * (Expression))
+--> A = B * (C * (Expression + Term))
+--> A = B * (C * (Term + Term))
+--> A = B * (C * (Factor + Term))
+--> A = B * (C * (Identifier + Term))
+--> A = B * (C * (A + Term))
+--> A = B * (C * (A + Factor))
+--> A = B * (C * (A + Identifier))
+--> A = B * (C * (A + B))
+
+--> Statement
+    --> Assignment
+        --> Identifier
+            --> A
+        --> =
+        --> Expression
+            --> Term
+                --> Term
+                    --> Identifier
+                        --> B
+                --> *
+                --> Factor
+                    --> ( Expression )
+                        --> Expression
+                            --> Term
+                                --> Term
+                                    --> Identifier
+                                        --> C
+                                --> *
+                                --> Factor
+                                    --> ( Expression )
+                                        --> Expression
+                                            --> Expression
+                                                --> Identifier
+                                                    --> A
+                                            --> +
+                                            --> Term
+                                                --> Identifier
+                                                    --> B
+
+
+2a. 180
+    main calls foo(u, 13), creating a local v that is equal to the global u, 42 and calls bar(add)
+    bar creates a local u that is equal to the global w and calls add with the parameter of global v which is 69
+    add then executes with global v and global u and the parameter z which is 69 and adds to 180 and then sets global u
+    to the sum 180.
+b.  126
+    main calls foo(u, 13), creating a local v that is equal to the global u, 42, and calls bar(add)
+    bar then creates a local u that is equal to the global w which is 17, then it calls add(v) when bar passed it earlier,
+    due to dynamic scope deep binding, the v is from the local v created in foo() which is 42 so it executes as add(42) so it is
+    u := 42 (local v from foo) + 42 (global u) + 42(z from add(42)) so global u is changed to 126
+c.  101
+    main calls foo(u, 13), creating a local v that is equal to the global u, 42, and calls bar(add)
+    bar then creates a local u that is equal to the global w which is 17, then it calls add(v) when bar passed it earlier,
+    the v is from the local v created in foo() which is 42 so it executes as add(42). Inside add(42), the v is still
+    equal to 42 from dynamic scope and u is now equal to 17 due to shallow binding because u = 17 inside of bar() and
+    z = 42 due to add(42) so the sum is 42 + 17 + 42 = 101, then the global u is set to 101
